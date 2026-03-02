@@ -7,9 +7,22 @@ description: Use the stravacli terminal tool to access Strava data (athlete prof
 
 Use `stravacli` for Strava operations from terminal.
 
+## Prerequisites
+
+This skill depends on the external CLI project:
+- Source: https://github.com/Brainsoft-Raxat/strava-cli
+
+Install `stravacli` before using this skill:
+- Recommended (release binary):
+  - Download latest from: https://github.com/Brainsoft-Raxat/strava-cli/releases/latest
+- Or with Go:
+  - `go install github.com/Brainsoft-Raxat/strava-cli/cmd/stravacli@latest`
+
+Then verify binary is available in PATH:
+- `stravacli --version`
+
 ## Setup
 
-- Ensure binary is available in PATH: `stravacli --version`
 - Authenticate before data commands:
   - Local: `stravacli auth login`
   - Headless/VPS: `stravacli auth login --remote`, then complete with `stravacli auth login --auth-url '<callback-url>'`
