@@ -1,0 +1,11 @@
+{
+  "owner": "dreadterror",
+  "slug": "telegram-voice-transcribe",
+  "displayName": "Telegram Voice Transcribe",
+  "latest": {
+    "version": "1.3.0",
+    "publishedAt": 1772384746647,
+    "commit": null
+  },
+  "history": []
+}
