@@ -1,3 +1,13 @@
+---
+name: "AI News Aggregator"
+slug: ai-news-aggregator
+version: "2.2.0"
+homepage: https://github.com/lanyasheng/ai-news-aggregator
+description: "AI/技术新闻聚合引擎。100+ RSS源并发抓取、兴趣评分、跨天去重、统一预取。"
+changelog: "v2.2: unified prefetch, interest scoring, cross-day dedup, repo restructure"
+metadata: {"clawdbot":{"emoji":"📰","requires":{"bins":["python3"]},"os":["linux","darwin","win32"]}}
+---
+
 # AI News Aggregator — AI/技术新闻高性能聚合引擎
 
 并发抓取 100+ RSS 源，12秒完成，支持 ETag/Last-Modified 缓存、日期过滤。
@@ -112,13 +122,3 @@ python3 skills/ai-news-aggregator/scripts/github_trending.py --since weekly
   "category": "company"
 }
 ```
-
----
-name: "AI News Aggregator"
-slug: ai-news-aggregator
-version: "2.1.0"
-homepage: https://github.com/lanyasheng/ai-news-aggregator
-description: "AI/技术新闻高性能聚合引擎。并发抓取 100+ RSS 源，支持日期过滤、智能缓存、arXiv 论文、GitHub Trending。"
-changelog: "Added date filtering (--days parameter), 100+ RSS sources, concurrent fetching with 10x performance improvement"
-metadata: {"clawdbot":{"emoji":"📰","requires":{"bins":["python3"]},"os":["linux","darwin","win32"]}}
----
