@@ -1,0 +1,11 @@
+{
+  "owner": "gatsby047-oss",
+  "slug": "config-manager",
+  "displayName": "Config Manager - 配置管理器",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1772497443638,
+    "commit": null
+  },
+  "history": []
+}
