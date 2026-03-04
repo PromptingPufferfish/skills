@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  📖 <a href="https://blog.oguzhanatalay.com/architecting-multi-agent-ai-fleet-single-vps"><strong>Read the story behind this →</strong></a>
+</p>
+
+<p align="center">
   <a href="https://github.com/oguzhnatly/fleet/actions"><img src="https://github.com/oguzhnatly/fleet/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <a href="https://clawhub.com"><img src="https://img.shields.io/badge/ClawHub-fleet-blue" alt="ClawHub" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License" /></a>
@@ -25,7 +29,9 @@
 
 ---
 
-You're running multiple [OpenClaw](https://openclaw.ai) gateways: a coordinator that thinks, employees that code, review, deploy, and research. Fleet gives your coordinator full operational awareness. Which agents are up, which CI is red, what changed since the last check.
+You're running multiple [OpenClaw](https://openclaw.ai) gateways: a coordinator that thinks, employees that code, review, deploy, and research. Fleet is the operational layer that was missing. One CLI that gives your coordinator full visibility, control, and judgment over the entire fleet.
+
+See what changed. Dispatch tasks. Learn which agents actually deliver, and route work to whoever you can trust. Works with any runtime.
 
 <p align="center">
   <em>Built for AI agents to manage AI agents. Works on any system 🦞</em>
@@ -49,11 +55,33 @@ You're running multiple [OpenClaw](https://openclaw.ai) gateways: a coordinator 
 
 📦 **Pattern library** · Solo empire, dev team, research lab. Pre built configs for common setups.
 
+## Contents
+
+- [Why Fleet?](#why-fleet)
+- [Quick Start](#quick-start)
+- [Commands](#commands)
+  - [Dispatch](#dispatch)
+  - [Monitoring](#monitoring)
+  - [Development](#development)
+  - [Operations](#operations)
+- [Patterns](#patterns)
+- [Configuration](#configuration)
+- [Environment Variables](#environment-variables)
+- [Architecture](#architecture)
+- [For AI Agents](#for-ai-agents)
+- [Requirements](#requirements)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [Support](#support)
+
 ## Quick Start
 
 ```bash
 # Install via ClawHub
 clawhub install fleet
+
+# Or via skills.sh (works with Claude Code, Codex, Cursor, Windsurf, and more)
+npx skills add oguzhnatly/fleet
 
 # Or clone directly
 git clone https://github.com/oguzhnatly/fleet.git
@@ -66,6 +94,17 @@ fleet sitrep
 ```
 
 ## Commands
+
+### Dispatch
+
+| Command | Description |
+|---------|-------------|
+| `fleet task <agent> "<prompt>"` | Dispatch a task to an agent, stream response live |
+| `fleet steer <agent> "<message>"` | Send a mid-session correction to a running agent |
+| `fleet watch <agent>` | Live session tail — polls every 3s, shows new messages as they arrive |
+| `fleet parallel "<task>"` | Decompose into subtasks, assign by type, dispatch all concurrently |
+| `fleet kill <agent>` | Send a graceful stop signal to an agent session |
+| `fleet log` | Append-only structured log of all dispatches and outcomes |
 
 ### Monitoring
 
@@ -92,7 +131,121 @@ fleet sitrep
 | `fleet init` | Interactive setup with gateway detection |
 
 <details>
-<summary><strong>See more command output examples</strong></summary>
+<summary><strong>See command output examples</strong></summary>
+
+#### `fleet task coder "add pagination to /api/spots, cursor-based, include tests"`
+
+```
+Fleet Task
+──────────
+  Agent     coder (port 48520)
+  Type      code
+  Task ID   a1b2c3d4
+  Timeout   30m
+
+  add pagination to /api/spots, cursor-based, include tests
+
+  ────────────────────────────────────────
+  I'll add cursor-based pagination to the /api/spots endpoint.
+
+  Starting with the database query layer...
+  [streams response in real time until complete]
+  ────────────────────────────────────────
+  ✅  Task complete  (a1b2c3d4)
+```
+
+#### `fleet steer coder "also add a max_limit cap of 100 per page"`
+
+```
+Fleet Steer
+───────────
+  Agent    coder
+  Session  fleet-coder
+
+  also add a max_limit cap of 100 per page
+
+  ────────────────────────────────────────
+  Good call. Adding MAX_LIMIT = 100 guard at the top of the handler...
+  ────────────────────────────────────────
+  ✅  Steered.
+```
+
+#### `fleet watch coordinator`
+
+```
+Watching coordinator
+────────────────────
+  Session: main · polling every 3s · Ctrl+C to stop
+
+  Connecting to coordinator session...
+  Last 3 message(s):
+
+  coordinator (claude-sonnet-4-6)  15:10 UTC
+  Running fleet sitrep...
+
+  you  15:23 UTC
+  build the pricing page
+
+  coordinator (claude-sonnet-4-6)  15:24 UTC
+  On it. Reading the Stripe config first...
+```
+
+#### `fleet parallel "research competitor pricing and build a pricing page with tiers" --dry-run`
+
+```
+Fleet Parallel
+──────────────
+  Task: research competitor pricing and build a pricing page with tiers
+
+  Execution plan:
+
+  1. researcher    [research]
+     Research phase: research competitor pricing and build a pricing page with tiers
+
+  2. coder         [code]
+     Implementation: research competitor pricing and build a pricing page with tiers
+
+  ────────────────────────────────────────
+  2 subtask(s) ready to dispatch in parallel.
+
+  ℹ️  Dry run complete. Remove --dry-run to execute.
+```
+
+#### `fleet log`
+
+```
+Fleet Log  3 entries
+
+  i9j0k1l2  coder        code      pending  ⤷1 steer
+  2026-03-01 15:30  refactor auth middleware to use JWT RS256 instead of HS256
+
+  e5f6g7h8  researcher   research  success  8m43s
+  2026-03-01 15:10  analyze top 3 competitor pricing models in the surf social space
+
+  a1b2c3d4  coder        code      success  12m17s
+  2026-03-01 15:10  add pagination to /api/spots endpoint with cursor-based approach...
+```
+
+#### `fleet log --agent coder --outcome success`
+
+```
+Fleet Log  2 entries
+
+  a1b2c3d4  coder        code      success  12m17s
+  2026-03-01 15:10  add pagination to /api/spots endpoint with cursor-based approach...
+```
+
+#### `fleet kill coder`
+
+```
+Fleet Kill
+──────────
+  Agent    coder
+  Session  fleet-coder
+
+  ✅  Agent coder acknowledged stop signal.
+  ✅  Kill signal sent to coder.
+```
 
 #### `fleet agents`
 
@@ -265,8 +418,14 @@ fleet/
 │       ├── ci.sh           # GitHub CI integration
 │       ├── health.sh       # Endpoint health checks
 │       ├── init.sh         # Interactive setup
+│       ├── kill.sh         # Graceful agent stop
+│       ├── log.sh          # Append-only dispatch log
+│       ├── parallel.sh     # Parallel task decomposition
 │       ├── sitrep.sh       # Structured status reports
-│       └── skills.sh       # ClawHub skill listing
+│       ├── skills.sh       # ClawHub skill listing
+│       ├── steer.sh        # Mid-session corrections
+│       ├── task.sh         # Task dispatch to agents
+│       └── watch.sh        # Live session tail
 ├── templates/configs/      # Config templates
 ├── examples/               # Architecture pattern examples
 │   ├── solo-empire/
@@ -282,10 +441,11 @@ Modular by design. Each command is a separate file. Add your own by dropping a `
 
 ## For AI Agents
 
-Fleet ships with a [`SKILL.md`](SKILL.md) that any OpenClaw agent can read. Install via ClawHub and your coordinator automatically knows how to manage the fleet:
+Fleet ships with a [`SKILL.md`](SKILL.md) that any AI coding agent can read. Install it and your coordinator automatically knows how to manage the fleet:
 
 ```bash
-clawhub install fleet
+clawhub install fleet          # OpenClaw agents
+npx skills add oguzhnatly/fleet  # Claude Code, Codex, Cursor, Windsurf, etc.
 ```
 
 The agent reads the skill file, learns the commands, and runs health checks autonomously during heartbeat cycles.
@@ -299,6 +459,56 @@ The agent reads the skill file, learns the commands, and runs health checks auto
 | curl | any | Pre installed on most systems |
 | [OpenClaw](https://openclaw.ai) | any | Gateway support required |
 | [gh CLI](https://cli.github.com/) | any | Optional, for CI commands |
+
+## Roadmap
+
+Fleet is being built in stages. Each version makes it more active, more intelligent, and more universal.
+
+### v1 · Shipped ✅
+Visibility layer. Monitoring, delta SITREP, CI status, backup, audit. Fleet can see the entire operation.
+
+### v2 · Shipped ✅ (task dispatch and session steering)
+Fleet stops being observational and becomes directive.
+
+- [x] `fleet log` — append-only structured log of everything dispatched and received (built first, foundation for everything else)
+- [x] `fleet task <agent> "<prompt>"` — dispatch a task to any agent from the CLI, with timeout and result capture
+- [x] `fleet watch <agent>` — live log tail from a specific agent session
+- [x] `fleet steer <agent> "<message>"` — send a mid-session correction to a running agent
+- [x] `fleet kill <agent>` — graceful session end
+- [x] `fleet parallel "<task>"` — break a high-level task into subtasks, assign to agents, run in parallel (with `--dry-run` to review decomposition before executing)
+
+### v3 · Planned (reliability scoring and agent trust)
+Fleet learns which agents actually deliver, not just which ones are alive.
+
+- [ ] `fleet trust` — trust matrix for all agents with scores, trends, and task counts
+- [ ] `fleet score <agent>` — per-task-type reliability breakdown: code, review, research, deploy, qa
+- [ ] Reliability formula: `completion_rate × quality_rate × speed_score` — all three multiply, an agent cannot hide poor quality behind high volume
+- [ ] 48-72 hour rolling window — recent behavior weighted over historical, score recovers fast when issues are fixed
+- [ ] Reliability-weighted routing for `fleet parallel` — dispatch to best agent per task type, not just whoever is idle (upgrade point from v2)
+- [ ] Trust summary line appended to every `fleet sitrep` output
+- [ ] v3.5: two-source cross-validation — fleet log (internal) vs GitHub commits (external), flags divergence
+
+### v4 · Planned (cross-runtime adapter layer)
+Fleet works with any agent on any runtime, not just OpenClaw.
+
+- [ ] Pluggable adapter interface: three-function contract (health, info, version) every runtime implements
+- [ ] Built-in adapters: OpenClaw (verified), HTTP (any /health endpoint), Docker (container status), Process (inferred, labeled as such)
+- [ ] `fleet adapters` — list registered adapters, status, and whether health is verified or inferred
+- [ ] `fleet runtime add <name> <type>` — register a new runtime without editing config manually
+- [ ] `fleet runtime test <name>` — one-off health check against a named adapter for debugging
+- [ ] Backward compatible: existing configs default to OpenClaw adapter, zero migration needed
+
+### v5 · Planned (server mode and HTTP API)
+Fleet becomes an embeddable data source, not just a CLI.
+
+- [ ] `fleet serve` — start fleet as a local HTTP server (localhost only by default)
+- [ ] `fleet status` — show if server is running, on what port, and uptime
+- [ ] REST API: `GET /agents`, `/sitrep`, `/trust`, `/log`, `/ci` and `POST /task`, `/steer`
+- [ ] All responses are structured JSON with stable field names
+- [ ] External tools, dashboards, and CI pipelines can consume fleet data without shelling out
+- [ ] Foundation for a future cloud sync tier (local free, cloud paid)
+
+---
 
 ## Contributing
 
