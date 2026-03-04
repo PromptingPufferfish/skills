@@ -1,11 +1,17 @@
 {
   "owner": "linux2010",
   "slug": "github-contribution",
-  "displayName": "GitHub Contribution Workflow",
+  "displayName": "GitHub Contribution",
   "latest": {
-    "version": "1.0.0",
-    "publishedAt": 1772432462845,
-    "commit": "https://github.com/openclaw/skills/commit/00294acd3f8ceaf90af4741ec907a291f084fe3b"
+    "version": "1.0.3",
+    "publishedAt": 1772547347661,
+    "commit": null
   },
-  "history": []
+  "history": [
+    {
+      "version": "1.0.0",
+      "publishedAt": 1772432462845,
+      "commit": "https://github.com/openclaw/skills/commit/00294acd3f8ceaf90af4741ec907a291f084fe3b"
+    }
+  ]
 }
