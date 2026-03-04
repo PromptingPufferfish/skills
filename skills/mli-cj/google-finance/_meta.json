@@ -1,0 +1,11 @@
+{
+  "owner": "mli-cj",
+  "slug": "google-finance",
+  "displayName": "Google Finance",
+  "latest": {
+    "version": "1.0.3",
+    "publishedAt": 1772612013646,
+    "commit": null
+  },
+  "history": []
+}
