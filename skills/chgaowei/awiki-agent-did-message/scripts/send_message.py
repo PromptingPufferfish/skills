@@ -1,25 +1,26 @@
-"""发送消息给指定 DID。
+"""Send a message to a specified DID.
 
-用法：
-    # 发送文本消息
-    uv run python scripts/send_message.py --to "did:wba:localhost:user:abc123" --content "你好！"
+Usage:
+    # Send a text message
+    uv run python scripts/send_message.py --to "did:wba:localhost:user:abc123" --content "Hello!"
 
-    # 指定消息类型
+    # Specify message type
     uv run python scripts/send_message.py --to "did:wba:localhost:user:abc123" --content "hello" --type text
 
-[INPUT]: SDK（RPC 调用）、credential_store（加载身份凭证）
-[OUTPUT]: 发送结果
-[POS]: 消息发送脚本
+[INPUT]: SDK (RPC calls), credential_store (load identity credentials)
+[OUTPUT]: Send result (with server_seq and client_msg_id)
+[POS]: Message sending script, auto-generates client_msg_id for idempotent delivery
 
 [PROTOCOL]:
-1. 逻辑变更时同步更新此头部
-2. 更新后检查所在文件夹的 CLAUDE.md
+1. Update this header when logic changes
+2. Check the folder's CLAUDE.md after updating
 """
 
 import argparse
 import asyncio
 import json
 import sys
+import uuid
 from pathlib import Path
 
 from utils import SDKConfig, create_molt_message_client, authenticated_rpc_call
@@ -35,11 +36,11 @@ async def send_message(
     msg_type: str = "text",
     credential_name: str = "default",
 ) -> None:
-    """发送消息给指定 DID。"""
+    """Send a message to a specified DID."""
     config = SDKConfig()
     auth_result = create_authenticator(credential_name, config)
     if auth_result is None:
-        print(f"凭证 '{credential_name}' 不可用，请先创建身份")
+        print(f"Credential '{credential_name}' unavailable; please create an identity first")
         sys.exit(1)
 
     auth, data = auth_result
@@ -53,22 +54,23 @@ async def send_message(
                 "receiver_did": receiver_did,
                 "content": content,
                 "type": msg_type,
+                "client_msg_id": str(uuid.uuid4()),
             },
             auth=auth,
             credential_name=credential_name,
         )
-        print("消息发送成功:")
+        print("Message sent successfully:")
         print(json.dumps(result, indent=2, ensure_ascii=False))
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="发送 DID 消息")
-    parser.add_argument("--to", required=True, type=str, help="接收方 DID")
-    parser.add_argument("--content", required=True, type=str, help="消息内容")
+    parser = argparse.ArgumentParser(description="Send DID message")
+    parser.add_argument("--to", required=True, type=str, help="Receiver DID")
+    parser.add_argument("--content", required=True, type=str, help="Message content")
     parser.add_argument("--type", type=str, default="text",
-                        help="消息类型（默认: text）")
+                        help="Message type (default: text)")
     parser.add_argument("--credential", type=str, default="default",
-                        help="凭证名称（默认: default）")
+                        help="Credential name (default: default)")
 
     args = parser.parse_args()
     asyncio.run(send_message(args.to, args.content, args.type, args.credential))
