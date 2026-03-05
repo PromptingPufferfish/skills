@@ -1,0 +1,11 @@
+{
+  "owner": "jolestar",
+  "slug": "okx-mcp-skill",
+  "displayName": "OKX MCP Skill",
+  "latest": {
+    "version": "1.0.1",
+    "publishedAt": 1772602909465,
+    "commit": null
+  },
+  "history": []
+}
