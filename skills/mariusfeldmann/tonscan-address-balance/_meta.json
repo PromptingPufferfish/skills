@@ -1,0 +1,11 @@
+{
+  "owner": "mariusfeldmann",
+  "slug": "tonscan-address-balance",
+  "displayName": "TONSCAN wallet balance",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1772799757280,
+    "commit": null
+  },
+  "history": []
+}
