@@ -1,0 +1,11 @@
+{
+  "owner": "matzoh",
+  "slug": "matz-swarm",
+  "displayName": "Matz Swarm",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1772802723430,
+    "commit": null
+  },
+  "history": []
+}
