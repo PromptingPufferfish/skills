@@ -1,0 +1,11 @@
+{
+  "owner": "membranedev",
+  "slug": "freshbooks",
+  "displayName": "Freshbooks",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1772690549308,
+    "commit": null
+  },
+  "history": []
+}
