@@ -1,113 +1,54 @@
-# UI Design Optimizer (ui 设计优化·模板)
+﻿# UI Design Optimizer
 
-Professional UI/UX design intelligence skill for OpenClaw agents.
+Implementation-first UI/UX skill for OpenClaw. It helps select style, color, and typography from local datasets, then produce a practical design spec and starter files.
 
-## Features
+## What This Version Improves (v1.1.0)
 
-- 🎨 **67 UI Styles** - Glassmorphism, Claymorphism, Minimalism, Brutalism, and more
-- 🌈 **96 Color Palettes** - Industry-specific color schemes
-- ✒️ **57 Font Pairings** - Curated typography combinations
-- 📐 **24 Landing Page Patterns** - Proven conversion structures
-- 🧠 **100 Reasoning Rules** - Industry-specific design guidelines
-- ♿ **Accessibility Checks** - WCAG compliance validation
+- Removes corrupted trigger patterns and metadata mojibake.
+- Normalizes trigger patterns for stable matching.
+- Keeps guidance focused on output quality and accessibility.
+- Works with runtime path `skills/ui-design-optimizer`.
 
-## Installation
+## Core Capabilities
 
-### From ClawHub (recommended)
+- Design-system generation
+- Style recommendation
+- Color palette selection
+- Typography pairing
+- Industry-oriented guidance
+- Accessibility checks (WCAG-oriented)
 
-```bash
-clawhub install ui-design-optimizer
-```
+## Data Files
 
-### Manual
+- `data/styles.csv`
+- `data/colors.csv`
+- `data/typography.csv`
+- `data/patterns.csv`
+- `data/rules.json`
 
-```bash
-# This skill is located at:
-# skills/local/ui-design-optimizer/
-```
+## Typical Prompts
 
-## Usage
+- `Design a landing page for a fintech product.`
+- `Generate a dashboard design system for a hiring tool.`
+- `Recommend color palette and typography for a wellness app.`
 
-The skill activates automatically when you request UI/UX design work.
-
-### Example Prompts
-
-```
-为我的美容 SPA 创建一个 landing page，使用柔和的配色和高端感觉
-
-为 SaaS 产品设计一个 dashboard，需要深色模式和数据分析图表
-
-设计一个电商网站，使用玻璃态风格和现代感
-
-Build a landing page for my SaaS product
-
-Design a mobile app UI for e-commerce
-
-Create a fintech banking app with dark theme
-```
-
-### Direct Script Usage
+## Script Usage
 
 ```powershell
-# Generate design system
-.\scripts\search.ps1 -Query "beauty spa wellness" -DesignSystem -ProjectName "Serenity Spa"
-
-# Generate with persistence
-.\scripts\search.ps1 -Query "SaaS dashboard" -DesignSystem -Persist -ProjectName "MyApp"
-
-# Search specific domains
-.\scripts\search.ps1 -Query "glassmorphism" -Domain style
-.\scripts\search.ps1 -Query "fintech" -Domain color
-.\scripts\search.ps1 -Query "elegant" -Domain typography
+powershell -ExecutionPolicy Bypass -File scripts/search.ps1 -Query "saas dashboard" -DesignSystem -ProjectName "Demo"
 ```
 
-## Supported Industries
+## Validation
 
-| Industry | Product Types |
-|----------|---------------|
-| Tech & SaaS | SaaS, Micro SaaS, B2B, Developer Tools, AI |
-| Finance | Fintech, Banking, Crypto, Insurance, Trading |
-| Healthcare | Medical, Pharmacy, Dental, Veterinary, Mental Health |
-| E-commerce | General, Luxury, Marketplace, Subscription |
-| Services | Beauty/Spa, Restaurant, Hotel, Legal, Consulting |
-| Creative | Portfolio, Agency, Photography, Gaming, Music |
-| Emerging Tech | Web3, Spatial Computing, Quantum, Autonomous |
+1. Check skill availability:
 
-## Output Format
-
-The skill generates a complete design system:
-
-```
-+--------------------------------------------------------------------------------+
-| TARGET: Serenity Spa - RECOMMENDED DESIGN SYSTEM                               |
-+--------------------------------------------------------------------------------+
-| PATTERN: Hero-Centric + Social Proof                                           |
-| STYLE: Soft UI Evolution                                                       |
-| COLORS: Primary: #E8B4B8 (Soft Pink), Secondary: #A8D5BA (Sage Green)          |
-| TYPOGRAPHY: Cormorant Garamond / Montserrat                                    |
-| KEY EFFECTS: Soft shadows, Smooth transitions, Gentle hover states             |
-| AVOID: Bright neon colors, Harsh animations, Dark mode                         |
-| CHECKLIST: [ ] No emojis, [ ] cursor-pointer, [ ] Hover states, etc.           |
-+--------------------------------------------------------------------------------+
+```powershell
+openclaw skills check | findstr /I "ui-design-optimizer"
 ```
 
-## Tech Stacks
-
-The skill supports guidelines for:
-
-- **Web**: HTML + Tailwind (default)
-- **React**: React, Next.js, shadcn/ui
-- **Vue**: Vue, Nuxt.js, Nuxt UI
-- **Other**: Svelte, Astro
-- **Mobile**: SwiftUI, Jetpack Compose, React Native, Flutter
-
-## License
-
-MIT License
+2. If available, generate a demo and verify file output in your target directory.
 
 ## Credits
 
-Adapted from [UI-UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (37.5k stars)
-
-Original by: nextlevelbuilder
-Official website: https://uupm.cc
+Adapted from UI-UX Pro Max:
+- https://github.com/nextlevelbuilder/ui-ux-pro-max-skill

@@ -1,7 +1,7 @@
-{
+﻿{
   "name": "ui-design-optimizer",
-  "version": "1.0.0",
-  "description": "UI Design Optimizer skill for OpenClaw - Professional UI/UX design intelligence with 100 reasoning rules, 67 UI styles, 96 color palettes, and 57 font pairings",
+  "version": "1.1.0",
+  "description": "UI Design Optimizer skill for OpenClaw with clean UTF-8 metadata, practical design-system generation, and implementation-oriented guidance",
   "author": "OpenClaw Assistant (adapted from UI-UX Pro Max)",
   "license": "MIT",
   "keywords": [
@@ -19,20 +19,17 @@
     "id": "ui-design-optimizer",
     "type": "design-intelligence",
     "trigger_patterns": [
-      "设计.*UI",
-      "设计.*UX",
-      "设计.*landing page",
-      "设计.*dashboard",
-      "配色.*推荐",
-      "字体.*推荐",
-      "生成.*设计系统",
+      "design.*ui",
+      "design.*ux",
+      "design.*landing page",
+      "design.*dashboard",
+      "generate.*design system",
+      "optimi[sz]e.*ui",
+      "ui.*design system",
       "build.*landing page",
-      "design.*UI",
-      "design.*UX",
       "create.*dashboard",
       "color.*palette",
-      "font.*pairing",
-      "generate.*design system"
+      "font.*pairing"
     ],
     "capabilities": [
       "design-system-generation",
@@ -57,7 +54,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/openclaw/workspace",
-    "directory": "skills/local/ui-design-optimizer"
+    "directory": "skills/ui-design-optimizer"
   },
   "credits": {
     "original_project": "UI-UX Pro Max",
