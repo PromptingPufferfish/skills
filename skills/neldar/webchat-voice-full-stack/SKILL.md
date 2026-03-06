@@ -8,10 +8,12 @@ description: >
   continuous recording shortcuts, VU meter, and localized UI (EN/DE/ZH).
   Designed for transparent, user-level deployment with explicit, reversible
   changes only (systemd user services, Control UI asset injection, gateway
-  allowed-origin update). No external telemetry and no recurring API costs after
-  initial model download. Keywords: voice input, microphone, WebChat, speech to
-  text, STT, local transcription, whisper, full stack, one-click, voice button,
-  push-to-talk, PTT, keyboard shortcut, i18n, HTTPS, WSS.
+  allowed-origin update). SHA256 integrity verification of all sub-skill scripts
+  before execution — deployment aborts on any checksum mismatch. No external
+  telemetry and no recurring API costs after initial model download. Keywords:
+  voice input, microphone, WebChat, speech to text, STT, local transcription,
+  whisper, full stack, one-click, voice button, push-to-talk, PTT, keyboard
+  shortcut, i18n, HTTPS, WSS, integrity verification, checksum.
 ---
 
 # WebChat Voice Full Stack
@@ -85,6 +87,26 @@ Safety characteristics:
 - no root/sudo required (user scope only)
 - no hidden background tasks beyond documented services
 - no outbound telemetry or data exfiltration behavior
+
+### Integrity verification
+
+Before executing any sub-skill script, `deploy.sh` verifies SHA256 checksums of **all** sub-skill scripts against `scripts/checksums.sha256`. If any script was modified after installation (e.g. by a registry update or tampering), deployment **aborts** with a clear error.
+
+**Workflow:**
+1. `npx clawhub install <sub-skill>` — fetch from registry
+2. Audit the scripts manually or via code review
+3. `bash scripts/rehash.sh` — record trusted checksums
+4. `bash scripts/deploy.sh` — verify checksums, then deploy
+
+**Dry-run verification** (no deployment):
+```bash
+VERIFY_ONLY=true bash scripts/deploy.sh
+```
+
+**After a sub-skill update:**
+1. Review the changed scripts
+2. `bash scripts/rehash.sh` to update the trusted baseline
+3. Commit the updated `checksums.sha256`
 
 ## Verify
 

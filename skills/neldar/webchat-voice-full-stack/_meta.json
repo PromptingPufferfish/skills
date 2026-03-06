@@ -3,11 +3,16 @@
   "slug": "webchat-voice-full-stack",
   "displayName": "Webchat Voice Full Stack",
   "latest": {
-    "version": "0.3.0",
-    "publishedAt": 1772756817653,
-    "commit": "https://github.com/openclaw/skills/commit/ee30521c9e9779c41082cff2f8f99d9de0ed53fd"
+    "version": "0.4.0",
+    "publishedAt": 1772820755330,
+    "commit": null
   },
   "history": [
+    {
+      "version": "0.3.0",
+      "publishedAt": 1772756817653,
+      "commit": "https://github.com/openclaw/skills/commit/ee30521c9e9779c41082cff2f8f99d9de0ed53fd"
+    },
     {
       "version": "0.2.1",
       "publishedAt": 1771811543014,
