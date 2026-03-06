@@ -3,9 +3,15 @@
   "slug": "figma-2",
   "displayName": "Figma",
   "latest": {
-    "version": "0.1.0",
-    "publishedAt": 1772618947757,
-    "commit": "https://github.com/openclaw/skills/commit/c51f4509f549382eadf240e1bdfc1e8de95028e5"
+    "version": "0.1.1",
+    "publishedAt": 1772786566733,
+    "commit": null
   },
-  "history": []
+  "history": [
+    {
+      "version": "0.1.0",
+      "publishedAt": 1772618947757,
+      "commit": "https://github.com/openclaw/skills/commit/c51f4509f549382eadf240e1bdfc1e8de95028e5"
+    }
+  ]
 }
