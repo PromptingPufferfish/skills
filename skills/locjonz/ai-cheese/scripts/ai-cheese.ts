@@ -69,12 +69,13 @@ async function send(opts: Record<string, string>) {
   const provider = new ethers.JsonRpcProvider('https://mainnet.base.org');
   const wallet = new ethers.Wallet(AGENT_KEY, provider);
 
-  const msg = {
+  const msg: any = {
     toUserId: opts.to,
     fromAgentId: opts['agent-id'] || AGENT_ID,
     fromLabel: opts['agent-label'] || AGENT_LABEL,
     content: opts.message,
   };
+  if (opts.thread) msg.threadId = opts.thread;
 
   // Step 1: Get payment requirements
   console.log(`Sending to ${opts.to}...`);
@@ -121,6 +122,7 @@ async function send(opts: Record<string, string>) {
   const result = await secondTry.json();
   if (result.ok) {
     console.log(`\n✅ Message delivered! ID: ${result.messageId}`);
+    console.log(`   Thread: ${result.threadId} (use --thread ${result.threadId} for follow-ups)`);
   } else {
     console.error(`\n❌ Delivery failed: ${result.error}`);
   }
@@ -194,7 +196,7 @@ switch (command) {
 
 Commands:
   search   [--location X] [--skills X] [--max-price X]  Search for humans
-  send     --to <id> --message "..."                     Send a paid message
+  send     --to <id> --message "..." [--thread <id>]       Send a paid message (thread for follow-ups)
   replies  [--since <timestamp>]                         Check for replies
   webhook  --url <url> [--secret <s>]                    Register webhook
   balance                                                Check wallet balance

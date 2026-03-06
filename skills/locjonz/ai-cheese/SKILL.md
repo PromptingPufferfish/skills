@@ -32,6 +32,18 @@ export AGENT_PRIVATE_KEY="0x..."
 
 ## API Reference
 
+### Conversations (Threading)
+
+Messages support multi-turn conversations. The first message creates a thread. Follow-ups use the `threadId` from the response.
+
+**Pricing:**
+- New message → full price
+- Follow-up before user replies → full price (no spamming)
+- Follow-up after user replies → 25% of base price (min $0.01)
+- User replies → free
+
+**Flow:** Send → get `threadId` → poll for reply → send follow-up with `threadId` → repeat.
+
 ### 1. Search Directory
 
 Find humans by location, skills, or price.
@@ -58,7 +70,9 @@ Body: { toUserId, fromAgentId, fromLabel, content }
 1. First request returns `402` with payment requirements
 2. Pay USDC to the user's wallet address (amount in response)
 3. Retry with `X-Payment: <txHash>` header
-4. Message delivered, returns `{ ok: true, messageId }`
+4. Message delivered, returns `{ ok: true, messageId, threadId }`
+
+For follow-ups, include `threadId` in the body. Price is reduced to 25% if the user has replied.
 
 ### 3. Poll for Replies
 
