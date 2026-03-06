@@ -1,0 +1,11 @@
+{
+  "owner": "wwek",
+  "slug": "feishu-tts-edge",
+  "displayName": "飞书发语音(edge)",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1772761588472,
+    "commit": null
+  },
+  "history": []
+}
