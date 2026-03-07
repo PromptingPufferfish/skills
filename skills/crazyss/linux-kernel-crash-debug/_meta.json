@@ -1,0 +1,11 @@
+{
+  "owner": "crazyss",
+  "slug": "linux-kernel-crash-debug",
+  "displayName": "Linux Kernel Crash Debug",
+  "latest": {
+    "version": "1.0.0",
+    "publishedAt": 1772813501965,
+    "commit": null
+  },
+  "history": []
+}
